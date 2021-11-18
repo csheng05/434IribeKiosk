@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory</title>
+    <link rel="stylesheet" href="bootstrap-5.1.3-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css"/>
+    <script src="bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
+    <script src="directory/jquery-3.6.0.min.js"></script>
+
+
+
+    <style>
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: normal;
+            src:
+                url('font/Open_Sans.woff2') format('woff2'),
+                url('font/Open_Sans.woff') format('woff'),
+                url('font/Open_Sans.eot?#iefix') format('embedded-opentype'),
+                url('font/Open_Sans.svg#OpenSans') format('svg'),
+                url('font/Open_Sans.ttf') format('truetype');
+        }
+
+        body {
+            background-color: white;
+            font-family: 'Open Sans';
+        }
+
+        #container {
+            width: 768px;
+            /* max-height: 1024px; */
+            /* max-width: 768px; */
+            height: 1024px;
+            background-color: white;
+            margin: auto;
+        }
+
+        .overflow-auto {
+            height: 638px;
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .overflow-auto::-webkit-scrollbar {
+            display: none;
+        }
+
+        .eventContainer {
+            width: 760px;
+            max-width: 768px;
+            background-color: #ffffff00;
+            display: none;
+        }
+
+        .card {
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+        
+
+        .infoStyle {
+            background-color: gray;
+            /* Changing background color */
+            border-radius: 5px;
+            /* Making border radius */
+
+        }
+
+        .title {
+            color: var(--red);
+        }
+
+        .datetime {
+            text-align: right;
+        }
+
+        :root {
+            --red: #E03A3E;
+        }
+
+        .navIconImg {
+            color: gray;
+            box-shadow: 2px 2px;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .navigation {
+            margin-bottom: 25px;
+        }
+
+        .nav-link {
+            color: black;
+        }
+
+        .nav-item>a:hover {
+            background-color: #e03a3d62;
+            color: black;
+        }
+
+        .nav>.nav-item>.active {
+            color: black;
+            background-color: var(--red);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="outline border border-dark">
+
+            <!-- iribe header -->
+            <div class="row header p-0 m-0">
+                <div class="title col align-middle p-0 m-0">
+                     <div class="h1 align-middle p-0 m-0 ps-1" style="font-size: 50px;">IRIBE CENTER</div>
+                </div>
+                <div class="datetime col p-0 m-0">
+                     <div id="headerDate" class="h4 p-0 pe-1 m-0">Sep 27th, 2021</div>
+                     <div id="headerTime" class="h3 p-0 pe-1 m-0">7:09 AM</div>
+                </div>
+            </div>
+            <!-- iribe header -->
+            <hr>
+            <div class="container-out">
+                <div class="container-in">
+                  <div class="search-container">
+                    <div class="search-engine">
+                      <p class="search-title"></p>
+                    </div>
+                    <div id="search-results"></div>
+                    <div id="search-data"></div>
+                  </div>
+                </div>
+              </div>
+            <!-- Search bar -->
+            <div class="row">
+                <div class="col" style="width: 100%;margin-left: 5px; margin-right: 5px;">
+                    <form class="d-flex" style="height: 45px;">
+                        <input class="use-keyboard-input" type="search"
+                        id="search-input" placeholder="Search in the Brendan Iribe Center directory!" aria-label="Search">
+                        <button class="btn my-2 my-sm-0" type="submit" style="background: var(--red)">
+                            <img src="icons/search.svg" width="150%" style="padding-right: 8px;" />
+                        </button>
+                    </form>
+                </div>
+            </div>      
+
+            <!-- Tabs for events/classes/faculty -->
+            <ul class="nav nav-pills nav-justified" style="margin-top: 15px; margin-left: 5px; margin-right: 5px;">
+                <li class="nav-item" style="margin-right: 2.5px;">
+                    <a class="nav-link active fw-bold eventsDivSelector" aria-current="page"
+                        href="#eventsDiv">Events</a> <!-- style="background-color: var(--red); color: black;" -->
+                </li>
+                <li class="nav-item" style="margin-left: 2.5px; margin-right: 2.5px;">
+                    <a class="nav-link fw-bold classesDivSelector" href="#classesDiv">Classes</a>
+                </li>
+                <li class="nav-item" style="margin-left: 2.5px;">
+                    <a class="nav-link fw-bold facultyDivSelector" href="#facultyDiv">Faculty</a>
+                </li>
+            </ul>
+            <hr>
+
+            <!-- Cards -->
+            <div class="overflow-auto">
+                <div class="eventContainer" id="eventsDiv"></div>
+                <div class="eventContainer" id="classesDiv"></div>
+                <div class="eventContainer" id="facultyDiv"></div>
+            </div>
+            <hr>
+
+            <!-- Footer -->
+            <div class="row navigation">
+                <div class="col text-center ">
+                   <a class="navlink" href="home.html">
+                       <img class="navIconImg" src="icons/house-fill.svg" width="100"></img>
+                   </a>
+                </div>
+                <div class="col text-center">
+                   <a class="navlink" href="directory.html">
+                       <img class="navIconImg" src="icons/calendar2-week-fill.svg" width="100"></object>
+                   </a>
+                </div>
+                <div class="col text-center">
+                   <a class="navlink" href="search.html">
+                       <img class="navIconImg" src="icons/search.svg" width="100"></object>
+                   </a>
+                </div>
+                <div class="col text-center">
+                    <a class="navlink" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                       <img class="navIconImg" src="icons/question-square-fill.svg" width="100"></object>
+                    </a>
+                </div>
+           </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Additional Help</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    To get more help, please visit the help desk on the first floor.
+                    </div>
+                    <div class="modal-footer">
+                        <a href='home.html?navigation=helpdesk'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me there!</button></a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+    Keyboard.init();
+});
+        function test(){
+
+        }
+        window.onload = function () {
+            $("#eventsDiv").show();
+            const params = new URLSearchParams(window.location.search);
+            if(params.get('search') == 'True') {
+                document.getElementById("search-input").focus();
+            }
+            let dateOptions = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'};
+            let timeOptions = { hour: 'numeric', minute: '2-digit'};
+            function updateDateTime() {
+                let dateBox = document.getElementById('headerDate');
+                let timeBox = document.getElementById('headerTime');
+                let date = new Date();
+                dateBox.innerHTML = new Intl.DateTimeFormat('en-US', dateOptions).format(date);
+                timeBox.innerHTML = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
+            }
+            updateDateTime();
+            setInterval(updateDateTime, 30000);
+        };
+
+        $(document).ready(function () {
+            $("a.eventsDivSelector").click(function () {
+                $("#eventsDiv").show();
+                $("#classesDiv").hide();
+                $("#facultyDiv").hide();
+
+            });
+
+            $("a.classesDivSelector").click(function () {
+                $("#eventsDiv").hide();
+                $("#classesDiv").show();
+                $("#facultyDiv").hide();
+
+            });
+
+            $("a.facultyDivSelector").click(function () {
+                $("#eventsDiv").hide();
+                $("#classesDiv").hide();
+                $("#facultyDiv").show();
+
+            });
+        });
+        function element(id) {
+            return document.getElementById(id);
+        }
+        let allSearchData = ""; //decleared to collect all search names
+        let search = element("search-input").value;
+        let content = '';
+        var backgroundColor = '#ebd886';
+        const Keyboard = {
+    elements: {
+        main: null,
+        keysContainer: null,
+        keys: []
+    },
+
+    eventHandlers: {
+        oninput: null,
+        onclose: null
+    },
+
+    properties: {
+        value: "",
+        capsLock: false
+    },
+
+    init() {
+        // Create main elements
+        this.elements.main = document.createElement("div");
+        this.elements.keysContainer = document.createElement("div");
+
+        // Setup main elements
+        this.elements.main.classList.add("keyboard", "keyboard--hidden");
+        this.elements.keysContainer.classList.add("keyboard__keys");
+        this.elements.keysContainer.appendChild(this._createKeys());
+
+        this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard__key");
+
+        // Add to DOM
+        this.elements.main.appendChild(this.elements.keysContainer);
+        document.body.appendChild(this.elements.main);
+
+        // Automatically use keyboard for elements with .use-keyboard-input
+        document.querySelectorAll(".use-keyboard-input").forEach(element => {
+            element.addEventListener("focus", () => {
+                this.open(element.value, currentValue => {
+                    element.value = currentValue;
+                });
+            });
+        });
+    },
+
+    _createKeys() {
+        const fragment = document.createDocumentFragment();
+        const keyLayout = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
+            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+            "space"
+        ];
+
+        // Creates HTML for an icon
+        const createIconHTML = (icon_name) => {
+            return `<i class="material-icons">${icon_name}</i>`;
+        };
+
+        keyLayout.forEach(key => {
+            const keyElement = document.createElement("button");
+            const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
+
+            // Add attributes/classes
+            keyElement.setAttribute("type", "button");
+            keyElement.classList.add("keyboard__key");
+
+            switch (key) {
+                case "backspace":
+                    keyElement.classList.add("keyboard__key--wide");
+                    keyElement.innerHTML = createIconHTML("back");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                        search = this.properties.value;
+                        this._triggerEvent("oninput");
+                        $('.use-keyboard-input')[0].oninput();
+                    });
+
+                    break;
+
+                case "caps":
+                    keyElement.classList.add("keyboard__key--wide", "keyboard__key--activatable");
+                    keyElement.innerHTML = createIconHTML("caps");
+
+                    keyElement.addEventListener("click", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
+                    });
+
+                    break;
+
+                case "enter":
+                    keyElement.classList.add("keyboard__key--wide");
+                    keyElement.innerHTML = createIconHTML("enter");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += "\n";
+                        $('.use-keyboard-input')[0].oninput();
+                    });
+
+                    break;
+
+                case "space":
+                    keyElement.classList.add("keyboard__key--extra-wide");
+                    keyElement.innerHTML = createIconHTML("space");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += " ";
+                        search += " ";
+                        element("search-input").value += " ";
+                        $('.use-keyboard-input')[0].oninput();
+                    });
+
+                    break;
+
+                case "done":
+                    keyElement.classList.add("keyboard__key--wide", "keyboard__key--dark");
+                    keyElement.innerHTML = createIconHTML("close");
+
+                    keyElement.addEventListener("click", () => {
+                        this.close();
+                        this._triggerEvent("onclose");
+                    });
+
+                    break;
+
+                default:
+                    keyElement.textContent = key.toLowerCase();
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        search += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        element("search-input").value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        $('.use-keyboard-input')[0].oninput();
+                    });
+
+                    break;
+            }
+
+            fragment.appendChild(keyElement);
+
+            if (insertLineBreak) {
+                fragment.appendChild(document.createElement("br"));
+            }
+        });
+
+        return fragment;
+    },
+
+    _triggerEvent(handlerName) {
+        if (typeof this.eventHandlers[handlerName] == "function") {
+            this.eventHandlers[handlerName](this.properties.value);
+        }
+    },
+
+    _toggleCapsLock() {
+        this.properties.capsLock = !this.properties.capsLock;
+
+        for (const key of this.elements.keys) {
+            if (key.childElementCount === 0) {
+                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        }
+    },
+
+    open(initialValue, oninput, onclose) {
+        this.properties.value = initialValue || "";
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.remove("keyboard--hidden");
+    },
+
+    close() {
+        this.properties.value = "";
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.add("keyboard--hidden");
+    }
+};
+
+
+        var eventData = [["IRB 1207", "21 November, 2021", "7:00pm", "9:00pm", "Board Game Night!", "Come join us for a couple of hours of board games. Free snacks will be there!", "Hack4Impact", "idEventAIRB0001"],
+        ["IRB 1116", "22 November, 2021", "5:00pm", "7:00pm", "Code: Black GBM", "Join us for our first in-person GBM - doesn't matter if you're an existing member or not!", "Code: Black", "idEventAIRB0002"],
+        ["IRB 0116", "25 November, 2021", "4:00pm", "6:00pm", "CMSC 351 - Guided Study Session", "Group study session for CMSC 351.", "College of Computer, Mathematical, and Natural Sciences", "idEventAIRB0003"],
+        ["IRB 0324", "25 November, 2021", "2:00pm", "3:00pm", "Creative Computing", "No Description", "College Park Academy", "idEventAIRB0004"],
+        ["IRB 0116", "26 November, 2021", "2:00pm", "3:00pm", "CSC Monthly Meeting 3", "No Description", "CSC", "idEventAIRB0005"],
+        ["IRB 1207", "28 November, 2021", "2:00pm", "3:00pm", "Creative Computing", "No Description", "Hyattsville", "idEventAIRB0006"],
+        ["IRB 0107", "30 November, 2021", "2:00pm", "3:00pm", "Hack4Impact: GBM", "Last GBM of the semester! Although it is the last meeting, even if you're not a member, come by to say hi and see what we'll offer next semester!", "Hack4Impact", "idEventAIRB0007"]]
+        let eventContent = '';
+        const colorPalette = ["#C5FFFD", "#FFD201", "#5B8E7D", "#E8E9EB", "#BEB7DF", "#5386E4", "#BCD2EE", "#E22237"]
+        var idx = 0;
+        eventData.forEach(p => {
+            var roomNumb = p[0].replace(/\s/g, '');
+            if (idx < (colorPalette.length - 1)) {
+                idx++;
+            } else {
+                idx = 0;
+            }
+            eventContent += `
+                        <div class="card" style="width:765px; height:200px; background-color:${colorPalette[idx]};" id="${p[p.length - 1]}" data-bs-toggle="modal" data-bs-target="#${p[p.length - 1].concat('modal')}">
+                            <div class="card-body">
+                                <div class="row-1" style="height:65%;"></div>
+                                <div class="row">
+                                    <div class="col" style="margin-left:5px;width: 70%;margin-top: 5px;margin-bottom: 5px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><h5 class="card-text text-start text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[0]}</h5></a>
+                                        <p class="fw-bold h5 card-title text-start text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[4]}</p>
+                                    </div>
+                                    <div class="col" style="margin-top:0px;margin-bottom:0px;">
+                                        <h5 class="card-text text-end text-dark" id="${p[p.length - 1]}" style="margin-top:14px;margin-bottom:0px;color:white;">${p[2] + " - " + p[3]}</h5>
+                                        <h5 class="card-text text-end text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[1]}</h5>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL CODE -->
+                                <div class="modal fade" id="${p[p.length - 1].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${p[p.length - 1].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <h5 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">${p[4]}</h5>
+                                        <hr>
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Host</h7>
+                                        <p>${p[6]}</p>
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Description</h7>
+                                        <p>${p[5]}</p>
+                                        
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Date & Time</h7>
+                                        <p>Time: ${p[2] + " - " + p[3]}<br>Date: ${p[1]}</p>
+                                        
+                                        
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Location</h7>
+                                        <p>${p[0]}</p>
+
+                                      </div>
+
+                                      <div class="modal-footer">
+                                        <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${p[0]}!</button></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+			
+                                    </div>
+	                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                            `
+        });
+
+    document.querySelector("#eventsDiv").innerHTML = eventContent;
+
+        var classData = [[["CMSC131", "0408", "Fawzi Emad", "Object-Oriented Programming I"], ["Lecture", "MWF 11:00am - 11:50am", "IRB 0324"], ["Discussion", "TuTh 5:00pm - 5:50pm", "CSI 2107"], "idCMSC1310408"],
+        [["CMSC132", "0103", "Larry Herman", "Object-Oriented Programming II"], ["Lecture", "MWF 1:00pm - 1:50pm", "IRB 0324"], ["Discussion", "MW 9:00am - 9:50am", "CSI 2118"], "idCMSC1320103"],
+        [["CMSC216", "0206", "Jose Calderon", "Introduction to Computer Systems"], ["Lecture", "TuTh 2:00pm - 3:15pm", "IRB 0324"], ["Discussion", "MW 4:00pm - 4:50pm", "IRB 1207"], "idCMSC2160206"],
+        [["CMSC250", "0107", "Justin Wyss-Gallifent", "Discrete Structures"], ["Lecture", "TuTh 3:30pm - 4:45pm", "IRB 0324"], ["Discussion", "MW 1:00pm - 1:50pm", "CSI 1122"], "idCMSC2500107"],
+        [["CMSC330", "0102", "Anwar Mamat", "Organization of Programming Languages"], ["Lecture", "TuTh 11:00am - 12:15pm", "ESJ 0224"], ["Discussion", "F 1:00pm - 1:50pm", "IRB 1207"], "idCMSC3300102"],
+        [["CMSC351", "0201", "Clyde Kruskal", "Algorithms"], ["Lecture", "MWF 4:00pm - 4:50pm", "IRB 0324"], ["", "", ""], "idCMSC3510201"],
+        [["CMSC421", "0101", "James Reggia", "Introduction to Artificial Intelligence"], ["Lecture", "TuTh 11:00am - 12:15pm", "IRB 1116"], ["", "", ""], "idCMSC4210101"],
+        [["CMSC434", "0101", "Evan Golub", "Introduction to Human-Computer Interaction"], ["Lecture", "TuTh 12:30pm - 1.45pm", "IRB 2107"], ["", "", ""], "idCMSC4340101"]
+        ]
+
+
+
+        let classContent = '';
+        var classBackgroundColor = '#ebe186'
+
+        classData.forEach(p => {
+            if (classBackgroundColor == 'white') {
+                classBackgroundColor = '#ebe186';
+            } else {
+                classBackgroundColor = 'white';
+            }
+            
+                classContent += `
+                        <div class="row" style="max-height: auto; background-color: ${classBackgroundColor}; padding: 5px;" id="${p[p.length - 1]}" data-bs-toggle="modal" data-bs-target="#${p[3].concat('modal')}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][0].concat(' (', p[0][1], ')')}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][2]}</p>
+                                </div>
+                            </div>
+            `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                if(p[curr][0] != '') {
+                    var roomNumb = p[curr][2].replace(/\s/g, '');
+                    classContent += `
+                    <div class="row" style="height: 25px">
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][0]}</p>
+                                </div>
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][1]}</p>
+                                </div>
+                                <div class="col" style="width: 100px; max-width: 100px;">
+                                    <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${p[p.length - 1]}">${p[curr][2]}</p></a>
+                                </div>
+                    </div>
+                    `
+                }
+                curr++;
+            }
+    
+            classContent += `                    
+                            <!-- MODAL CODE -->
+                                <div class="modal fade" id="${p[3].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${p[3].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <!-- Title (CMSCxxx (yyyy))-->
+                                        <h5 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][0].concat(' (', p[0][1], ')')}</h5>
+                                        <hr>
+                                        <!-- Class descriptive name -->
+                                        <h7 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][3]}</h7>                                      
+                        `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    var txt = 'Time: '.concat(p[curr][1], "<br>", "Location: ", p[curr][2]);
+                    classContent += `
+                    <hr>
+                    <p class="fw-bold" id="${p[3].concat('modal')}">${p[curr][0]}</p>
+                    <p>${txt}</p>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `
+                                </div>
+
+                                <div class="modal-footer">
+                            `
+                            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    classContent += `
+                    <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${p[curr][2]}</button></a>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `                        
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        });
+
+        document.querySelector("#classesDiv").innerHTML = classContent;
+
+        var facultyData = [
+            { Room: "IRB 5156", LDAP: "abadi", LastName: "Abadi", FirstName: " Daniel" },
+            { Room: "IRB 2204", LDAP: "bkadams", LastName: "Adams", FirstName: " Brandi" },
+            { Room: "IRB 5144", LDAP: "agrawala", LastName: "Agrawala", FirstName: " Ashok" },
+            { Room: "IRB 4214", LDAP: "jyaloimo", LastName: "Aloimonos", FirstName: " Yannis" },
+            { Room: "IRB 1204", LDAP: "andradea", LastName: "Andrade", FirstName: " Amy" },
+            { Room: "IRB 2164", LDAP: "warbaugh", LastName: "Arbuagh", FirstName: " Bill" },
+            { Room: "IRB 1206", LDAP: "katea", LastName: "Atchinson", FirstName: " Kate" },
+            { Room: "IRB 3242", LDAP: "ayres", LastName: "Ayres", FirstName: " Daniel" },
+            { Room: "IRB 3144", LDAP: "mbaney", LastName: "Baney", FirstName: " Matt" },
+            { Room: "IRB 2164", LDAP: "basivic", LastName: "Basili", FirstName: " Vic" },
+            { Room: "IRB 5148", LDAP: "leibatt", LastName: "Battle", FirstName: " Leilani" },
+            { Room: "IRB 5140", LDAP: "bobby", LastName: "Bhattacharjee", FirstName: " Bobby" },
+            { Room: "IRB 3164", LDAP: "ssb", LastName: "Bhattacharyya", FirstName: " Shuvra" },
+            { Room: "IRB 2254", LDAP: "bsouvik", LastName: "Bhattacherjee", FirstName: " Souvik" },
+            { Room: "IRB 5124", LDAP: "thorb", LastName: "Bjorgvinsson", FirstName: " Sigurthior" },
+            { Room: "IRB 3146", LDAP: "sbobbin", LastName: "Bobbin", FirstName: " Shawn" },
+            { Room: "IRB 4146", LDAP: "ying", LastName: "Boyd-Graber", FirstName: " Jordan" },
+            { Room: "IRB 2142", LDAP: "rboykin", LastName: "Boykin", FirstName: " Regis" },
+            { Room: "IRB 3126", LDAP: "melbrach", LastName: "Brachfeld", FirstName: " Melissa" },
+            { Room: "IRB 3206", LDAP: "bbrawn", LastName: "Brawn-Cinani", FirstName: " Barbara" },
+            { Room: "IRB 2252", LDAP: "mariakc", LastName: "Cameron", FirstName: " Maria" },
+            { Room: "IRB 4226", LDAP: "acardone", LastName: "Cardone", FirstName: " Antonio" },
+            { Room: "IRB 4130", LDAP: "marine", LastName: "Carpuat", FirstName: " Marine" },
+            { Room: "IRB 4236", LDAP: "carlosc", LastName: "Castillo", FirstName: " Carlos" },
+            { Room: "IRB 4246", LDAP: "chella", LastName: "Chellappa", FirstName: " Rama" },
+            { Room: "IRB 4222", LDAP: "jcchen", LastName: "Chen", FirstName: " Jun-Cheng" },
+            { Room: "IRB 5256", LDAP: "rchen", LastName: "Chen", FirstName: " Ray" },
+            { Room: "IRB 5160", LDAP: "wcleavel", LastName: "Cleaveland", FirstName: " Rance" },
+            { Room: "IRB 3224", LDAP: "hcorrada", LastName: "Corrada Bravo", FirstName: " HÔOctor" },
+            { Room: "IRB 2224", LDAP: "mcukier", LastName: "Cukier", FirstName: " Michel" },
+            { Room: "IRB 3240", LDAP: "mcummin1", LastName: "Cummings", FirstName: " Michael" },
+            { Room: "IRB 5238", LDAP: "danadach", LastName: "Dachman Soled", FirstName: " Dana" },
+            { Room: "IRB 4148", LDAP: "hal3", LastName: "Daume", FirstName: " Hal" },
+            { Room: "IRB 4248", LDAP: "lsdavis", LastName: "Davis", FirstName: " Larry" },
+            { Room: "IRB 2252", LDAP: "rdechter", LastName: "Dechter", FirstName: " Rina" },
+            { Room: "IRB 4132", LDAP: "deflo", LastName: "DeFloriani", FirstName: " Leila" },
+            { Room: "IRB 5154", LDAP: "adeshpan", LastName: "Deshpande", FirstName: " Amol" },
+            { Room: "IRB 4128", LDAP: "johnd", LastName: "Dickerson", FirstName: " John" },
+            { Room: "IRB 4132", LDAP: "bdorr", LastName: "Dorr", FirstName: " Bonnie" },
+            { Room: "IRB 5228", LDAP: "tdumitra", LastName: "Dumitras", FirstName: " Tudor" },
+            { Room: "IRB 4244", LDAP: "rduraisw", LastName: "Duraiswami", FirstName: " Ramani" },
+            { Room: "IRB 4245", LDAP: "rduraisw", LastName: "Duraiswami", FirstName: " Ramani" },
+            { Room: "IRB 1126", LDAP: "reastman", LastName: "Eastman", FirstName: " Roger" },
+            { Room: "IRB 3246", LDAP: "elsayed", LastName: "El Sayed", FirstName: " Najib" },
+            { Room: "IRB 4210", LDAP: "helman", LastName: "Elman", FirstName: " Howard" },
+            { Room: "IRB 2212", LDAP: "fpe", LastName: "Emad", FirstName: " Fawzi" },
+            { Room: "IRB 5218", LDAP: "iendegen", LastName: "Endegena", FirstName: " Israel" },
+            { Room: "IRB 4202", LDAP: "sfeizi", LastName: "Feizi", FirstName: " Soheil" },
+            { Room: "IRB 4140", LDAP: "nfeldma4", LastName: "Feldman", FirstName: " Naomi" },
+            { Room: "IRB 4216", LDAP: "fermulcm", LastName: "FernmÔOller", FirstName: " Cornelia" },
+            { Room: "IRB 2206", LDAP: "jasonfil", LastName: "Filippou", FirstName: " Jason" },
+            { Room: "IRB 2130", LDAP: "afindlay", LastName: "Findlay", FirstName: " Adelaide" },
+            { Room: "IRB 2132", LDAP: "rmathur4", LastName: "Mathur", FirstName: " Richa " },
+            { Room: "IRB 1154", LDAP: "vfitz", LastName: "Fitzgerald", FirstName: " Victoria" },
+            { Room: "IRB 2162", LDAP: "jfoster4", LastName: "Foster", FirstName: " Jeff" },
+            { Room: "IRB 4144", LDAP: "vfrias", LastName: "Frias-Martinez", FirstName: " Vanessa" },
+            { Room: "IRB 2202", LDAP: "miriam88", LastName: "Friedman", FirstName: " Miriam" },
+            { Room: "IRB 4138", LDAP: "petra", LastName: "Galuscakova", FirstName: " Petra" },
+            { Room: "IRB 4126", LDAP: "gegao", LastName: "Gao", FirstName: " Ge" },
+            { Room: "IRB 2242", LDAP: "gasarch", LastName: "Gasarch", FirstName: " Bill" },
+            { Room: "IRB 3130", LDAP: "mgedra", LastName: "Gedra", FirstName: " Margit" },
+            { Room: "IRB 4212", LDAP: "tomg", LastName: "Goldstein", FirstName: " Tom" },
+            { Room: "IRB 1210", LDAP: "egolub", LastName: "Golub", FirstName: " Evan" },
+            { Room: "IRB 2144", LDAP: "jgray2", LastName: "Gray", FirstName: " Jodie" },
+            { Room: "IRB 4234", LDAP: "ngumerov", LastName: "Gumerov", FirstName: " Nail" },
+            { Room: "IRB 5158", LDAP: "hajiagha", LastName: "Hajiaghayi", FirstName: " Mohammad" },
+            { Room: "IRB 3236", LDAP: "sridhar", LastName: "Hannenhalli", FirstName: " Sridhar" },
+            { Room: "IRB 3136", LDAP: "ehartz", LastName: "Hartz", FirstName: " Emily" },
+            { Room: "IRB 3204", LDAP: "jheager2", LastName: "Heagerty", FirstName: " Jon" },
+            { Room: "IRB 3126", LDAP: "mherd", LastName: "Herd", FirstName: " Maria" },
+            { Room: "IRB 1124", LDAP: "larry", LastName: "Herman", FirstName: " Larry" },
+            { Room: "IRB 5246", LDAP: "mhicks2", LastName: "Hicks", FirstName: " Mike" },
+            { Room: "IRB 2152", LDAP: "tholden1", LastName: "Holden", FirstName: " Todd" },
+            { Room: "IRB 5152", LDAP: "hollings", LastName: "Hollingsworth", FirstName: " Jeff" },
+            { Room: "IRB 3132", LDAP: "ehontz", LastName: "Hontz", FirstName: " Elizabeth" },
+            { Room: "IRB 4204", LDAP: "furongh", LastName: "Huang", FirstName: " Furong" },
+            { Room: "IRB 5256", LDAP: "wrhuang", LastName: "Huang", FirstName: " Ronny" },
+            { Room: "IRB 1250", LDAP: "meesh", LastName: "Hugue", FirstName: " Michelle" },
+            { Room: "IRB 1130", LDAP: "thurst", LastName: "Hurst", FirstName: " Tom" },
+            { Room: "IRB 2156", LDAP: "seriv", LastName: "Ivanov", FirstName: " Sergey" },
+            { Room: "IRB 4240", LDAP: "dwj", LastName: "Jacobs", FirstName: " David" },
+            { Room: "IRB 3214", LDAP: "josephj", LastName: "Jaja", FirstName: " Joseph" },
+            { Room: "IRB 3202", LDAP: "jishjesu", LastName: "Jesudass", FirstName: " Jisha" },
+            { Room: "IRB 2148", LDAP: "danaejo", LastName: "Johnson", FirstName: " Danae" },
+            { Room: "IRB 2128", LDAP: "mjohns40", LastName: "Johnson", FirstName: " Maria" },
+            { Room: "IRB 2162", LDAP: "kanal", LastName: "Kanal", FirstName: " Laveen" },
+            { Room: "IRB 3226", LDAP: "jkanche", LastName: "Kancherla Jayaram", FirstName: "" },
+            { Room: "IRB 5226", LDAP: "jkatz2", LastName: "Katz", FirstName: " Jonathan" },
+            { Room: "IRB 5146", LDAP: "keleher", LastName: "Keleher", FirstName: " Pete" },
+            { Room: "IRB 5128", LDAP: "samirk", LastName: "Khuller", FirstName: " Samir" },
+            { Room: "IRB 2240", LDAP: "ckruskal", LastName: "Kruskal", FirstName: " Clyde" },
+            { Room: "IRB 1204", LDAP: "mlanahan", LastName: "Lanahan", FirstName: " Morgan" },
+            { Room: "IRB 3252", LDAP: "eclee2", LastName: "Lee", FirstName: " Eric" },
+            { Room: "IRB 3150", LDAP: "rleimens", LastName: "Leimenstoll", FirstName: " Ryan" },
+            { Room: "IRB 3244", LDAP: "mdml", LastName: "Leiserson", FirstName: " Max" },
+            { Room: "IRB 5222", LDAP: "levindm", LastName: "Levin", FirstName: " Dave" },
+            { Room: "IRB 3238", LDAP: "blewis12", LastName: "Lewis", FirstName: " Barbara" },
+            { Room: "IRB 3254", LDAP: "sidali", LastName: "Li", FirstName: " Sida" },
+            { Room: "IRB 2134", LDAP: "lin", LastName: "Lin", FirstName: " Ming" },
+            { Room: "IRB 5164", LDAP: "lin", LastName: "Lin", FirstName: " Ming" },
+            { Room: "IRB 4220", LDAP: "cswluo", LastName: "Luo", FirstName: " Wei" },
+            { Room: "IRB 2244", LDAP: "anwar", LastName: "Mamat", FirstName: " Anwar" },
+            { Room: "IRB 5164", LDAP: "dmanocha", LastName: "Manocha", FirstName: " Dinesh" },
+            { Room: "IRB 2222", LDAP: "mmarsh", LastName: "Marsh", FirstName: " Mike" },
+            { Room: "IRB 5236", LDAP: "mmazurek", LastName: "Mazurek", FirstName: " Michelle" },
+            { Room: "IRB 2138", LDAP: "sharron", LastName: "McElroy", FirstName: " Sharron" },
+            { Room: "IRB 3228", LDAP: "meiselj", LastName: "Meisel", FirstName: " Jackie" },
+            { Room: "IRB 5204", LDAP: "amemon", LastName: "Memon", FirstName: " Atif" },
+            { Room: "IRB 3246", LDAP: "cmerenst", LastName: "Merenstein", FirstName: " Carter" },
+            { Room: "IRB 2164", LDAP: "millerre", LastName: "Miller", FirstName: " Ray" },
+            { Room: "IRB 2162", LDAP: "minker", LastName: "Minker", FirstName: " Jack" },
+            { Room: "IRB 3152", LDAP: "lmon", LastName: "Monahan", FirstName: " Liam" },
+            { Room: "IRB 3220", LDAP: "dnasko", LastName: "Nasko", FirstName: " Dan" },
+            { Room: "IRB 4158", LDAP: "nau", LastName: "Nau", FirstName: " Dana" },
+            { Room: "IRB 1146", LDAP: "aneuner", LastName: "Neuner", FirstName: " Alyssa" },
+            { Room: "IRB 4142", LDAP: "oard", LastName: "Oard", FirstName: " Doug" },
+            { Room: "IRB 2160", LDAP: "oleary", LastName: "O'Leary", FirstName: " Dianne" },
+            { Room: "IRB 2254", LDAP: "onwunta", LastName: "Onwunta", FirstName: " Akyum" },
+            { Room: "IRB 2210", LDAP: "nelsonp", LastName: "Padua-Perez", FirstName: " Nelson" },
+            { Room: "IRB 5224", LDAP: "cpap", LastName: "Papamanthou", FirstName: " Babis" },
+            { Room: "IRB 5126", LDAP: "rpassan", LastName: "Passan", FirstName: " Ravindra" },
+            { Room: "IRB 2214", LDAP: "huaishu", LastName: "Peng", FirstName: " Huaishu" },
+            { Room: "IRB 4156", LDAP: "perlis", LastName: "Perlis", FirstName: " Don" },
+            { Room: "IRB 4250", LDAP: "jperrone", LastName: "Perrone", FirstName: " Janice" },
+            { Room: "IRB 2146", LDAP: "speters", LastName: "Peters", FirstName: " Stephanie" },
+            { Room: "IRB 1132", LDAP: "apimpawa", LastName: "Pimpawathin", FirstName: " Apitchaya" },
+            { Room: "IRB 1254", LDAP: "jplane", LastName: "Plane", FirstName: " Jan" },
+            { Room: "IRB 3134", LDAP: "mpop", LastName: "Pop", FirstName: " Mihai" },
+            { Room: "IRB 3222", LDAP: "mpop", LastName: "Pop", FirstName: " Mihai" },
+            { Room: "IRB 5212", LDAP: "aporter", LastName: "Porter", FirstName: " Adam" },
+            { Room: "IRB 2164", LDAP: "pugh", LastName: "Pugh", FirstName: " Bill" },
+            { Room: "IRB 5234", LDAP: "purcell2", LastName: "Purcell", FirstName: " Dana" },
+            { Room: "IRB 5214", LDAP: "purtilo", LastName: "Purtilo", FirstName: " Jim" },
+            { Room: "IRB 5248", LDAP: "rrand", LastName: "Rand", FirstName: " Robert" },
+            { Room: "IRB 4154", LDAP: "lraschid", LastName: "Raschid", FirstName: " Louiqa" },
+            { Room: "IRB 4124", LDAP: "reggia", LastName: "Reggia", FirstName: " James" },
+            { Room: "IRB 2224", LDAP: "regli", LastName: "Regli", FirstName: " Bill" },
+            { Room: "IRB 4150", LDAP: "resnik", LastName: "Resnik", FirstName: " Philip" },
+            { Room: "IRB 3148", LDAP: "ridge", LastName: "Ridge", FirstName: " Joe" },
+            { Room: "IRB 3210", LDAP: "mritter2", LastName: "Ritter", FirstName: " Mike" },
+            { Room: "IRB 2160", LDAP: "nickr", LastName: "Roussopoulos", FirstName: " Nick" },
+            { Room: "IRB 3245", LDAP: "niruroy", LastName: "Roy", FirstName: " Nirupam" },
+            { Room: "IRB 5240", LDAP: "niruroy", LastName: "Roy", FirstName: " Nirupam" },
+            { Room: "IRB 3234", LDAP: "mrumi", LastName: "Rumi", FirstName: " Monjura Afrin" },
+            { Room: "IRB 2158", LDAP: "stryan", LastName: "Ryan", FirstName: " Steven" },
+            { Room: "IRB 1214", LDAP: "psadeghi", LastName: "Sadeghian", FirstName: " Pedram" },
+            { Room: "IRB 4226", LDAP: "sadr", LastName: "Sadrfaridour", FirstName: " Behzad" },
+            { Room: "IRB 4252", LDAP: "hjs", LastName: "Samet", FirstName: " Hanan" },
+            { Room: "IRB 1252", LDAP: "vibha", LastName: "Sazawal", FirstName: " Vibha" },
+            { Room: "IRB 3140", LDAP: "aschenk", LastName: "Schenk", FirstName: " Arlene" },
+            { Room: "IRB 1152", LDAP: "lsegler", LastName: "Segler", FirstName: " Lauren" },
+            { Room: "IRB 3216", LDAP: "jselengu", LastName: "Selengut", FirstName: " Jeremy" },
+            { Room: "IRB 5150", LDAP: "shankar", LastName: "Shankar", FirstName: " A. Udaya" },
+            { Room: "IRB 2162", LDAP: "bshneide", LastName: "Shneiderman", FirstName: " Ben" },
+            { Room: "IRB 4238", LDAP: "abhinav2", LastName: "Shrivastava", FirstName: " Abhinav" },
+            { Room: "IRB 2124", LDAP: "slocke", LastName: "Sickle Locke", FirstName: " Stacey" },
+            { Room: "IRB 2154", LDAP: "rsmith91", LastName: "Smith", FirstName: " Richard" },
+            { Room: "IRB 4220", LDAP: "ysong128", LastName: "Song", FirstName: " Yan" },
+            { Room: "IRB 5138", LDAP: "nspring", LastName: "Spring", FirstName: " Neil" },
+            { Room: "IRB 4164", LDAP: "asriniv1", LastName: "Srinivasan", FirstName: " Aravind" },
+            { Room: "IRB 2162", LDAP: "stewart", LastName: "Stewart", FirstName: " Pete" },
+            { Room: "IRB 5142", LDAP: "asussman", LastName: "Sussman", FirstName: " Alan" },
+            { Room: "IRB 2140", LDAP: "tafoya", LastName: "Tafoya", FirstName: " Sammie" },
+            { Room: "IRB 1128", LDAP: "nayeem", LastName: "Teli", FirstName: " Mohammad Naeem" },
+            { Room: "IRB 1148", LDAP: "dturner8", LastName: "Turner", FirstName: " David" },
+            { Room: "IRB 1142", LDAP: "availlan", LastName: "Vaillancourt", FirstName: " Amy" },
+            { Room: "IRB 3142", LDAP: "yerty", LastName: "Valenzuela", FirstName: " Yerty" },
+            { Room: "IRB 5250", LDAP: "dvanhorn", LastName: "VanHorn", FirstName: " David" },
+            { Room: "IRB 3107", LDAP: "varshney", LastName: "Varshney", FirstName: " Amitabh" },
+            { Room: "IRB 3212", LDAP: "varshney", LastName: "Varshney", FirstName: " Amitabh" },
+            { Room: "IRB 4224", LDAP: "venkai", LastName: "Venkat Santhanam", FirstName: "" },
+            { Room: "IRB 3128", LDAP: "tventsia", LastName: "Ventsias", FirstName: " Tom" },
+            { Room: "IRB 5216", LDAP: "vishkin", LastName: "Vishkin", FirstName: " Uzi" },
+            { Room: "IRB 2150", LDAP: "jworden", LastName: "Worden", FirstName: " Jeanine" },
+            { Room: "IRB 3164", LDAP: "minwu", LastName: "Wu", FirstName: " Min" },
+            { Room: "IRB 5210", LDAP: "xiaodiwu", LastName: "Wu", FirstName: " Xiaodi" },
+            { Room: "IRB 4242", LDAP: "yaser", LastName: "Yacoob", FirstName: " Yaser" },
+            { Room: "IRB 3124", LDAP: "dyarnell", LastName: "Yarnell", FirstName: " Derek" },
+            { Room: "IRB 1248", LDAP: "icyoon", LastName: "Yoon", FirstName: " Ilchul" },
+            { Room: "IRB 3138", LDAP: "pzapf", LastName: "Zapf", FirstName: " Petra" },
+            { Room: "IRB 2160", LDAP: "mvz", LastName: "Zelkowitz", FirstName: " Marvin" },
+            { Room: "IRB 5220", LDAP: "qzhengcs", LastName: "Zheng", FirstName: " Quan" },
+            { Room: "IRB 4218", LDAP: "wdz", LastName: "Zotkin", FirstName: " Dmitry" },
+            { Room: "IRB 4138", LDAP: "ezotkina", LastName: "Zotkina", FirstName: " Elena" },
+            { Room: "IRB 4206", LDAP: "zwicker", LastName: "Zwicker", FirstName: " Matthias" },
+            { Room: "IRB 5109", LDAP: "mailroom", LastName: "mailroom", FirstName: " The" },
+            { Room: "IRB 1208", LDAP: "copier", LastName: "copier/printer workroom", FirstName: " A" },
+            { Room: "IRB 1125", LDAP: "workroom", LastName: "workroom", FirstName: " A" },
+            { Room: "IRB 2208", LDAP: "copier", LastName: "copier/printer workroom", FirstName: " A" },
+            { Room: "IRB 5149", LDAP: "copier", LastName: "copier/printer workroom", FirstName: " A" },
+            { Room: "IRB 1138", LDAP: "tblackw", LastName: "Blackwell", FirstName: " Tori" },
+            { Room: "IRB 1141", LDAP: "cabansag", LastName: "Cabansag", FirstName: "Courtney" },
+            { Room: "IRB 1139", LDAP: "cdenis", LastName: "Denis", FirstName: "Christine" },
+            { Room: "IRB 1144", LDAP: "johnsobr", LastName: "Johnson", FirstName: "Brittany" },
+            { Room: "IRB 1140", LDAP: "hhermela", LastName: "Hailemeskel", FirstName: "Hermela" }
+        ]
+        let facultyContent = '';
+        var facultyBackgroundColor = '#ebe186';
+
+        facultyData.forEach(p => {
+            var roomNumb = p.Room.replace(/\s/g, '');
+            if (facultyBackgroundColor == 'white') {
+                facultyBackgroundColor = '#ebe186';
+            } else {
+                facultyBackgroundColor = 'white';
+            }
+            facultyContent += `
+                        <div class="row" style="background-color: ${facultyBackgroundColor}; padding: 5px;" id="${'id'.concat(p.LDAP)}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${'id'.concat(p.LDAP)}">${p.FirstName.concat(' ', p.LastName)}</p>
+                                </div>
+                            </div>
+
+                            <!-- Second line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="width: 72px; max-width: 72px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Location:'.concat(' ')}</p>                      
+                                </div>
+                                <div class="col"style="width: 100px; max-width: 100px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${'id'.concat(p.LDAP)}">${p.Room}</p></a>
+                                </div>   
+                                <div class="col"style="width: 78px; max-width: 78px;">
+                                </div>   
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Email: '.concat(p.LDAP, '@umd.edu')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+        });
+
+        document.querySelector("#facultyDiv").innerHTML = facultyContent;
+
+        $(".nav .nav-link").on("click", function () {
+            $(".nav").find(".active").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        function getResults() {
+            //gets value of input
+            search = element("search-input").value;
+            allSearchData = ""; //clears data for each word typed
+
+            hideSearchResults();
+            clearSearchResults();
+            clearSearchData(); //
+
+            let content = '';
+            var backgroundColor = '#ebd886'
+            var idx = -1;
+            if (search.length > 1) {
+                let counter = 0; // counts to 10
+                for (let y of eventData) {
+                    var found = 0;
+                    for (let x of y) {
+                        if (counter < 10) {
+                            //checks for similarities
+                            if (x.toLowerCase().includes(search.toLowerCase())) {
+                                found = 1;
+                            }
+                        }
+                        if (x.toLowerCase().includes(search.toLowerCase()))
+                            //saves all the realated names
+                            allSearchData += "<p>" + x + "</p>";
+                        //break;
+                    }
+
+                    if (found == 1) {
+                        
+                                //populates the suggestion div
+                                if (idx < (colorPalette.length - 1)) {
+                                    idx++;
+                                } else {
+                                    idx = 0;
+                                }
+
+                                var roomNumb = y[0].replace(/\s/g, '');
+                                element("eventsDiv").innerHTML += `
+                                <div class="card" style="width:765px; height:200px; background-color:${colorPalette[idx]};" id="${y[y.length - 1]}" data-bs-toggle="modal" data-bs-target="#${y[y.length - 1].concat('modal')}">
+                            <div class="card-body">
+                                <div class="row-1" style="height:65%;"></div>
+                                <div class="row">
+                                    <div class="col" style="margin-left:5px;width: 70%;margin-top: 5px;margin-bottom: 5px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><h5 class="card-text text-start text-dark" id="${y[y.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${y[0]}</h5></a>
+                                        <p class="fw-bold h5 card-title text-start text-dark" id="${y[y.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${y[4]}</p>
+                                    </div>
+                                    <div class="col" style="margin-top:0px;margin-bottom:0px;">
+                                        <h5 class="card-text text-end text-dark" id="${y[y.length - 1]}" style="margin-top:14px;margin-bottom:0px;color:white;">${y[2] + " - " + y[3]}</h5>
+                                        <h5 class="card-text text-end text-dark" id="${y[y.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${y[1]}</h5>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL CODE -->
+                                <div class="modal fade" id="${y[y.length - 1].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${y[y.length - 1].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <h5 class="modal-title fw-bold" id="${y[y.length - 1].concat('modal')}">${y[4]}</h5>
+                                        <hr>
+                                        <h7 class="modal-title fw-bold" id="${y[y.length - 1].concat('modal')}">Host</h7>
+                                        <p>${y[6]}</p>
+                                        <h7 class="modal-title fw-bold" id="${y[y.length - 1].concat('modal')}">Description</h7>
+                                        <p>${y[5]}</p>
+                                        
+                                        <h7 class="modal-title fw-bold" id="${y[y.length - 1].concat('modal')}">Date & Time</h7>
+                                        <p>Time: ${y[2] + " - " + y[3]}<br>Date: ${y[1]}</p>
+                                        
+                                        
+                                        <h7 class="modal-title fw-bold" id="${y[y.length - 1].concat('modal')}">Location</h7>
+                                        <p>${y[0]}</p>
+
+                                      </div>
+
+                                      <div class="modal-footer">
+                                        <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${y[0]}!</button></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+			
+                                    </div>
+	                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        `
+                                // counter++;
+                    }
+
+                    
+
+                }
+                for (let p of classData) {
+                    var found = 0;
+                    for (let z of p) {
+                        for (let x of z) {
+                            if (x.toLowerCase().includes(search.toLowerCase())) {
+                                found = 1;
+                            }
+                        }
+                    }
+
+                    if (found == 1) {
+                        if (backgroundColor == 'white') {
+                                    backgroundColor = '#ebd886';
+                                } else {
+                                    backgroundColor = 'white';
+                                }
+                                let classContent = ' ';
+                                classContent += `
+                        <div class="row" style="max-height: auto; background-color: ${backgroundColor}; padding: 5px;" id="${p[p.length - 1]}" data-bs-toggle="modal" data-bs-target="#${p[3].concat('modal')}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][0].concat(' (', p[0][1], ')')}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][2]}</p>
+                                </div>
+                            </div>
+            `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                if(p[curr][0] != '') {
+                    var roomNumb = p[curr][2].replace(/\s/g, '');
+                    classContent += `
+                    <div class="row" style="height: 25px">
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][0]}</p>
+                                </div>
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][1]}</p>
+                                </div>
+                                <div class="col" style="width: 100px; max-width: 100px;">
+                                    <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${p[p.length - 1]}">${p[curr][2]}</p></a>
+                                </div>
+                    </div>
+                    `
+                }
+                curr++;
+            }
+    
+            classContent += `                    
+                            <!-- MODAL CODE -->
+                                <div class="modal fade" id="${p[3].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${p[3].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <!-- Title (CMSCxxx (yyyy))-->
+                                        <h5 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][0].concat(' (', p[0][1], ')')}</h5>
+                                        <hr>
+                                        <!-- Class descriptive name -->
+                                        <h7 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][3]}</h7>                                      
+                        `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    var txt = 'Time: '.concat(p[curr][1], "<br>", "Location: ", p[curr][2]);
+                    classContent += `
+                    <hr>
+                    <p class="fw-bold" id="${p[3].concat('modal')}">${p[curr][0]}</p>
+                    <p>${txt}</p>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `
+                                </div>
+
+                                <div class="modal-footer">
+                            `
+                            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    classContent += `
+                    <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${p[curr][2]}</button></a>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `                        
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+
+
+
+
+
+                                element("classesDiv").innerHTML += classContent;
+                    }
+                }
+                for (let p of facultyData) {
+                    var found = 0;
+                    for (let x of Object.values(p)) {
+                        if (counter < 10) {
+                            //checks for similarities
+                            if (x.toLowerCase().includes(search.toLowerCase())) {
+                                found = 1;
+                            }
+                        }
+                        if (x.toLowerCase().includes(search.toLowerCase()))
+                            //saves all the realated names
+                            allSearchData += "<p>" + x + "</p>";
+                        //break;
+                    }
+
+                    if (found == 1) {
+                        if (backgroundColor == 'white') {
+                                    backgroundColor = '#ebd886';
+                                } else {
+                                    backgroundColor = 'white';
+                                }
+                                //populates the suggestion div
+                                let facultyContent = ' ';
+                                var roomNumb = p.Room.replace(/\s/g, '');
+            facultyContent += `
+                        <div class="row" style="background-color: ${backgroundColor}; padding: 5px;" id="${'id'.concat(p.LDAP)}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${'id'.concat(p.LDAP)}">${p.FirstName.concat(' ', p.LastName)}</p>
+                                </div>
+                            </div>
+
+                            <!-- Second line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="width: 72px; max-width: 72px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Location:'.concat(' ')}</p>                      
+                                </div>
+                                <div class="col"style="width: 100px; max-width: 100px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${'id'.concat(p.LDAP)}">${p.Room}</p></a>
+                                </div>   
+                                <div class="col"style="width: 78px; max-width: 78px;">
+                                </div>   
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Email: '.concat(p.LDAP, '@umd.edu')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+
+                                element("facultyDiv").innerHTML += facultyContent;
+                                //counter++;
+                    }
+                }
+
+                displaySearchResults();
+            }
+            else if (search.length == 0) {
+                var idx = -1;
+                eventData.forEach(p => {
+                    if (idx < (colorPalette.length - 1)) {
+                        idx++;
+                    } else {
+                        idx = 0;
+                    }
+                    var roomNumb = p[0].replace(/\s/g, '');
+                    let eventContent = ' ';
+                    eventContent += `
+                        <div class="card" style="width:765px; height:200px; background-color:${colorPalette[idx]};" id="${p[p.length - 1]}" data-bs-toggle="modal" data-bs-target="#${p[p.length - 1].concat('modal')}">
+                            <div class="card-body">
+                                <div class="row-1" style="height:65%;"></div>
+                                <div class="row">
+                                    <div class="col" style="margin-left:5px;width: 70%;margin-top: 5px;margin-bottom: 5px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><h5 class="card-text text-start text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[0]}</h5></a>
+                                        <p class="fw-bold h5 card-title text-start text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[4]}</p>
+                                    </div>
+                                    <div class="col" style="margin-top:0px;margin-bottom:0px;">
+                                        <h5 class="card-text text-end text-dark" id="${p[p.length - 1]}" style="margin-top:14px;margin-bottom:0px;color:white;">${p[2] + " - " + p[3]}</h5>
+                                        <h5 class="card-text text-end text-dark" id="${p[p.length - 1]}" style="margin-top:0px;margin-bottom:0px;color:white;">${p[1]}</h5>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL CODE -->
+                                <div class="modal fade" id="${p[p.length - 1].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${p[p.length - 1].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <h5 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">${p[4]}</h5>
+                                        <hr>
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Host</h7>
+                                        <p>${p[6]}</p>
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Description</h7>
+                                        <p>${p[5]}</p>
+                                        
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Date & Time</h7>
+                                        <p>Time: ${p[2] + " - " + p[3]}<br>Date: ${p[1]}</p>
+                                        
+                                        
+                                        <h7 class="modal-title fw-bold" id="${p[p.length - 1].concat('modal')}">Location</h7>
+                                        <p>${p[0]}</p>
+
+                                      </div>
+
+                                      <div class="modal-footer">
+                                        <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${p[0]}!</button></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+			
+                                    </div>
+	                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                            `
+
+                    element("eventsDiv").innerHTML += eventContent;
+                });
+                classData.forEach(p => {
+                    if (backgroundColor == 'white') {
+                                    backgroundColor = '#ebd886';
+                                } else {
+                                    backgroundColor = 'white';
+                                }
+                                let classContent = ' ';
+                                classContent += `
+                        <div class="row" style="max-height: auto; background-color: ${backgroundColor}; padding: 5px;" id="${p[p.length - 1]}" data-bs-toggle="modal" data-bs-target="#${p[3].concat('modal')}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][0].concat(' (', p[0][1], ')')}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-left fw-bold" id="${p[p.length - 1]}">${p[0][2]}</p>
+                                </div>
+                            </div>
+            `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                if(p[curr][0] != '') {
+                    var roomNumb = p[curr][2].replace(/\s/g, '');
+                    classContent += `
+                    <div class="row" style="height: 25px">
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][0]}</p>
+                                </div>
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${p[p.length - 1]}">${p[curr][1]}</p>
+                                </div>
+                                <div class="col" style="width: 100px; max-width: 100px;">
+                                    <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${p[p.length - 1]}">${p[curr][2]}</p></a>
+                                </div>
+                    </div>
+                    `
+                }
+                curr++;
+            }
+    
+            classContent += `                    
+                            <!-- MODAL CODE -->
+                                <div class="modal fade" id="${p[3].concat('modal')}" tabindex="-1" role="dialog" aria-labelledby="${p[3].concat('modal')}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	
+                                    <div class="modal-content">
+
+                                      <div class="modal-body ">
+                                        <!-- Title (CMSCxxx (yyyy))-->
+                                        <h5 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][0].concat(' (', p[0][1], ')')}</h5>
+                                        <hr>
+                                        <!-- Class descriptive name -->
+                                        <h7 class="modal-title fw-bold" id="${p[3].concat('modal')}">${p[0][3]}</h7>                                      
+                        `
+            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    var txt = 'Time: '.concat(p[curr][1], "<br>", "Location: ", p[curr][2]);
+                    classContent += `
+                    <hr>
+                    <p class="fw-bold" id="${p[3].concat('modal')}">${p[curr][0]}</p>
+                    <p>${txt}</p>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `
+                                </div>
+
+                                <div class="modal-footer">
+                            `
+                            var curr = 1;
+
+            while(Array.isArray(p[curr]) && p[curr].length == 3) {
+                var roomNumb = p[curr][2].replace(/\s/g, '');
+                if(p[curr][0] != '') {
+                    classContent += `
+                    <a href='home.html?navigation=${roomNumb}'><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Take me to ${p[curr][2]}</button></a>
+                    `
+                }
+                curr++;
+            }
+
+            classContent += `                        
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+
+                    element("classesDiv").innerHTML += classContent;
+                });
+                facultyData.forEach(p => {
+                    let facultyContent = ' ';
+          if (backgroundColor == 'white') {
+            backgroundColor = '#ebd886';
+          } else {
+            backgroundColor = 'white';
+          }
+
+          var roomNumb = p.Room.replace(/\s/g, '');
+        
+            facultyContent += `
+                        <div class="row" style="background-color: ${backgroundColor}; padding: 5px;" id="${'id'.concat(p.LDAP)}">
+                            <!-- First line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="max-width: 250px;">
+                                    <p class="text-left fw-bold" id="${'id'.concat(p.LDAP)}">${p.FirstName.concat(' ', p.LastName)}</p>
+                                </div>
+                            </div>
+
+                            <!-- Second line -->
+                            <div class="row" style="height: 25px">
+                                <div class="col" style="width: 72px; max-width: 72px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Location:'.concat(' ')}</p>                      
+                                </div>
+                                <div class="col"style="width: 100px; max-width: 100px;">
+                                        <a href='home.html?navigation=${roomNumb}' class="link-danger"><p class="text-left" id="${'id'.concat(p.LDAP)}">${p.Room}</p></a>
+                                </div>   
+                                <div class="col"style="width: 78px; max-width: 78px;">
+                                </div>   
+                                <div class="col" style="width: 250px; max-width: 250px;">
+                                    <p class="text-left" id="${'id'.concat(p.LDAP)}">${'Email: '.concat(p.LDAP, '@umd.edu')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+
+          element("facultyDiv").innerHTML += facultyContent;
+        });
+      
+            }
+
+        }
+    //displays the suggestion div
+    function displaySearchResults() {
+      element("search-results").style.display = "block";
+    }
+    //clears the suggestion div
+    function clearSearchResults() {
+      element("search-results").innerHTML = "";
+    }
+
+    //hides the suggestion div
+    function hideSearchResults() {
+      element("search-results").style.display = "none";
+    }
+    //displays names when you click a suggestions
+    function displayData(name) {
+      element("search-data").innerHTML = "<p>" + name + "</p>";
+      hideSearchResults();
+    }
+    //displays all related names to your search when you hit enter
+    function displayAllData(names) {
+      element("search-data").innerHTML = names;
+      hideSearchResults();
+    }
+    //clears names displayed from search result
+    function clearSearchData() {
+    element("eventsDiv").innerHTML = "";
+    element("classesDiv").innerHTML = "";
+      element("facultyDiv").innerHTML = "";
+    }
+    //gets results after each input
+    element("search-input").oninput = function () {
+      getResults();
+    };
+
+    element("search-input").addEventListener("keyup", function (event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        displayAllData(allSearchData);
+      }
+    });
+ </script>
+</body>
